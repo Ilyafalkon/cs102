@@ -15,17 +15,17 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    for char in plaintext :
+    char_possible_indexes = list(range(65, 91))
+    char_possible_indexes.extend(range(65, 91))
+    char_possible_indexes.extend(range(97, 123))
+    char_possible_indexes.extend(range(97, 123))
+    for char in plaintext:
         char_index = ord(char)
-        char_possible_indexes = list(range(65, 91)) 
-        char_possible_indexes.extend(range(65, 91))
-        char_possible_indexes.extend(range(97, 123))
-        char_possible_indexes.extend(range(97, 123))
-        if ( char_index in char_possible_indexes ) :
-            char_index = char_possible_indexes[char_possible_indexes.index(char_index)+shift%26]
+        if char_index in char_possible_indexes:
+            char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift % 26]
         char = chr(char_index)
         ciphertext += char
-        
+
     return ciphertext
 
 
@@ -43,15 +43,15 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    for char in ciphertext :
-        char_index = ord(char)
-        char_possible_indexes = list(range(65, 91)) 
-        char_possible_indexes.extend(range(65, 91))
-        char_possible_indexes.extend(range(97, 123))
-        char_possible_indexes.extend(range(97, 123))
-        char_possible_indexes.reverse()
-        if ( char_index in char_possible_indexes ) :
-            char_index = char_possible_indexes[char_possible_indexes.index(char_index)+shift%26]
+    char_possible_indexes = list(range(65, 91))
+    char_possible_indexes.extend(range(65, 91))
+    char_possible_indexes.extend(range(97, 123))
+    char_possible_indexes.extend(range(97, 123))
+    char_possible_indexes.reverse()
+    for char in ciphertext:
+        char_index = ord(char) 
+        if char_index in char_possible_indexes:
+            char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift % 26]
         char = chr(char_index)
         plaintext += char
     return plaintext
