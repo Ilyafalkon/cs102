@@ -26,7 +26,9 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             i = 0
         char_index = ord(char)
         if char_index in shift:
-            char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift[ord(keyword[i])]]
+            char_index = char_possible_indexes[
+                char_possible_indexes.index(char_index) + shift[ord(keyword[i])]
+            ]
         char = chr(char_index)
         ciphertext += char
         i = i + 1

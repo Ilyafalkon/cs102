@@ -49,7 +49,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     char_possible_indexes.extend(range(97, 123))
     char_possible_indexes.reverse()
     for char in ciphertext:
-        char_index = ord(char) 
+        char_index = ord(char)
         if char_index in char_possible_indexes:
             char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift % 26]
         char = chr(char_index)
