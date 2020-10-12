@@ -13,12 +13,12 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    k=0
-    for i in range(1, n+1):
-        if (n%i==0):
-            k=k+1
-   
-    if (k==2):
+    k = 0
+    for i in range(1, n + 1):
+        if n % i == 0:
+            k = k + 1
+
+    if k == 2:
         print(True)
     else:
         print(False)
@@ -35,11 +35,11 @@ def gcd(a: int, b: int) -> int:
     1
     """
     while a != 0 and b != 0:
-        if (a>b):
-            a=a%b
-        else: 
-            b=b%a
-    print(a+b)
+        if a > b:
+            a = a % b
+        else:
+            b = b % a
+    print(a + b)
     pass
 
 
@@ -51,7 +51,10 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
+    d = 1
+    while d * e % phi != 1:
+        d += 1
+    print(d)
     pass
 
 
@@ -62,15 +65,13 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("p and q cannot be equal")
 
     # n = pq
-       
     n = p * q
 
-
     # phi = (p-1)(q-1)
-    phi = (p-1) * (q-1)
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)    
+    e = random.randrange(1, phi)
 
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     g = gcd(e, phi)

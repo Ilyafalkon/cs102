@@ -20,15 +20,15 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
     keyword += "."
-    i=0 
+    i = 0
     for char in plaintext:
-        if (keyword[i]==".") :
-            i=0
+        if keyword[i] == ".":
+            i = 0
         char_index = ord(char)
-        if char_index in shift :
+        if char_index in shift:
             char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift[ord(keyword[i])]]
         char = chr(char_index)
-        ciphertext+=char
+        ciphertext += char
         i = i + 1
     return ciphertext
 
@@ -56,14 +56,16 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
     keyword += "."
-    i=0 
+    i = 0
     for char in ciphertext:
-        if (keyword[i]==".") :
-            i=0
+        if keyword[i] == ".":
+            i = 0
         char_index = ord(char)
-        if char_index in shift :
-            char_index = char_possible_indexes[char_possible_indexes.index(char_index) + shift[ord(keyword[i])]]
+        if char_index in shift:
+            char_index = char_possible_indexes[
+                char_possible_indexes.index(char_index) + shift[ord(keyword[i])]
+            ]
         char = chr(char_index)
-        plaintext+=char
+        plaintext += char
         i = i + 1
     return plaintext
