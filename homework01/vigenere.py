@@ -10,12 +10,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    char_possible_indexes = list(range(65, 91))
-    char_possible_indexes.extend(range(65, 91))
-    char_possible_indexes.extend(range(97, 123))
-    char_possible_indexes.extend(range(97, 123))
-    char_indexes = list(range(65, 91))
-    char_indexes.extend(range(97, 123))
+    char_possible_indexes = list(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+    char_indexes = list(range(ord("A"), ord("Z")+1))
+    char_indexes.extend(range(ord("a"), ord("z")+1))
     shift_for_char = list(range(26))
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
@@ -47,13 +47,13 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    char_possible_indexes = list(range(65, 91))
-    char_possible_indexes.extend(range(65, 91))
-    char_possible_indexes.extend(range(97, 123))
-    char_possible_indexes.extend(range(97, 123))
+    char_possible_indexes = list(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
     char_possible_indexes.reverse()
-    char_indexes = list(range(65, 91))
-    char_indexes.extend(range(97, 123))
+    char_indexes = list(range(ord("A"), ord("Z")+1))
+    char_indexes.extend(range(ord("a"), ord("z")+1))
     shift_for_char = list(range(26))
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
