@@ -13,7 +13,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+ 1))
     char_indexes = list(range(ord("A"), ord("Z") + 1))
     char_indexes.extend(range(ord("a"), ord("z") + 1))
     shift_for_char = list(range(26))

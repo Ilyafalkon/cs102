@@ -17,7 +17,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z") +1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
     for char in plaintext:
         char_index = ord(char)
