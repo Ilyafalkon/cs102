@@ -10,21 +10,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-<<<<<<< HEAD
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
     char_indexes = list(range(ord("A"), ord("Z") + 1))
     char_indexes.extend(range(ord("a"), ord("z") + 1))
-=======
-    char_possible_indexes = list(range(ord("a"), ord("z")+1))
-    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
-    char_indexes = list(range(ord("A"), ord("Z")+1))
-    char_indexes.extend(range(ord("a"), ord("z")+1))
->>>>>>> 09516eee1ee42e473b195211dba43f6e4f45c144
     shift_for_char = list(range(26))
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
@@ -56,7 +47,6 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-<<<<<<< HEAD
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
@@ -64,15 +54,6 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     char_possible_indexes.reverse()
     char_indexes = list(range(ord("A"), ord("Z") + 1))
     char_indexes.extend(range(ord("a"), ord("z") + 1))
-=======
-    char_possible_indexes = list(range(ord("a"), ord("z")+1))
-    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
-    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
-    char_possible_indexes.reverse()
-    char_indexes = list(range(ord("A"), ord("Z")+1))
-    char_indexes.extend(range(ord("a"), ord("z")+1))
->>>>>>> 09516eee1ee42e473b195211dba43f6e4f45c144
     shift_for_char = list(range(26))
     shift_for_char.extend(range(26))
     shift = dict(zip(char_indexes, shift_for_char))
