@@ -15,10 +15,17 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
+<<<<<<< HEAD
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
+=======
+    char_possible_indexes = list(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+>>>>>>> 09516eee1ee42e473b195211dba43f6e4f45c144
     for char in plaintext:
         char_index = ord(char)
         if char_index in char_possible_indexes:
@@ -43,10 +50,17 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
+<<<<<<< HEAD
     char_possible_indexes = list(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("a"), ord("z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
     char_possible_indexes.extend(range(ord("A"), ord("Z") + 1))
+=======
+    char_possible_indexes = list(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("a"), ord("z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+    char_possible_indexes.extend(range(ord("A"), ord("Z")+1))
+>>>>>>> 09516eee1ee42e473b195211dba43f6e4f45c144
     char_possible_indexes.reverse()
     for char in ciphertext:
         char_index = ord(char)
