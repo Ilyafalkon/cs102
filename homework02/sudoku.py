@@ -164,13 +164,24 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
                 return grid
             else:
                 grid[row][col] = "."
+    return None
               
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    for i in range(len(grid[0])):
+        if len(set(get_row(grid, (i, 0)))) == 9 and len(set(get_col(grid, (0, i)))) == 9:
+            for row in range(0,7,3):
+                for col in range(0,7,3):
+                    if len(set(get_block(grid,(row,col))))==9:
+                        return True
+                    else:
+                        return False         
+        else: 
+            return False
+
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
