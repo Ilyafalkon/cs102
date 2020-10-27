@@ -57,7 +57,9 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    row_WeNeed = grid[pos[0]]
+    return row_WeNeed 
+
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -70,7 +72,9 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+
+    col_WeNeed = [grid[i][pos[1]] for i in range(len(grid[0]))]
+    return col_WeNeed
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -84,7 +88,13 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    Number_OfBlock = (pos[0]//3, pos[1]//3)
+    row, col = Number_OfBlock
+    row_InBlock = int(len(grid[0])**0.5)
+    block_WeNeed = []
+    for row in range(3*row, 3*row + row_InBlock):
+        block_WeNeed.extend([grid[row][col] for col in range(col*3, col*3 + row_InBlock)])
+    return block_WeNeed
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
