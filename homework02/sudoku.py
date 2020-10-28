@@ -173,7 +173,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     # TODO: Add doctests with bad puzzles
     check = True
     for i in range(len(solution[0])):
-        if len(set(get_row(solution, (i, 0)))) == 9 and len(set(get_col(solution, (0, i)))) == 9 and ("." not in set(get_row(solution, (i,0)))):
+        if len(set(get_row(solution, (i, 0)))) == 9 and len(set(get_col(solution, (0, i)))) == 9 and "." not in set(get_row(solution, (i,0))):
             for row in range(0,7,3):
                 for col in range(0,7,3):
                     if len(set(get_block(solution,(row,col))))==9:
@@ -208,7 +208,42 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    
+    table_withNumbers= [i%9 for i in range(1,82)]
+    table = group(table_withNumbers, 9)
+    counter_of_row = 0
+    for row in table:
+        for num in range(9):
+            if counter_of_row % 3 == 0:
+                row[num] = str(int((row[num] + counter_of_row/3) % 9))
+            elif counter_of_row <3:
+                row[num] = str(int((row[num]+3*counter_of_row)%9))
+            elif counter_of_row <6:
+                row[num] = str(int(((row[num]+3*counter_of_row)+1)%9))
+            elif counter_of_row <9:
+                row[num] = str(int(((row[num]+3*counter_of_row)+2)%9))
+            if row[num] == '0':
+                row[num] = '9'
+        counter_of_row += 1 
+    import random
+    for i in range(20):
+        i=random.randint(0,8)
+        if i%3==2:
+            table[i], table[i-1] = table[i-1], table[i]
+        elif i%3==1:
+            table[i+1], table[i-1] = table[i-1], table[i+1]
+        else:
+            table[i], table[i+1] = table[i+1], table[i]
+    n=0
+    while n<(81-N):
+        row = random.randint(0,8)
+        col = random.randint(0,8)
+        if table[row][col] != ".":
+            table[row][col] = "."
+            n += 1
+    return table
+               
+
+
 
 if __name__ == "__main__":
     for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
