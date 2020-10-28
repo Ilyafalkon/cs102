@@ -42,9 +42,8 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    list_Of_Elements = [ values[n*i-n:n*i] for i in range(1, len(values)//n + 1) ]
+    list_Of_Elements = [values[n * i - n : n * i] for i in range(1, len(values) // n + 1)]
     return list_Of_Elements
-    
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -58,8 +57,7 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     ['.', '8', '9']
     """
     row_WeNeed = grid[pos[0]]
-    return row_WeNeed 
-
+    return row_WeNeed
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -88,12 +86,12 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    Number_OfBlock = (pos[0]//3, pos[1]//3)
+    Number_OfBlock = (pos[0] // 3, pos[1] // 3)
     row, col = Number_OfBlock
-    row_InBlock = int(len(grid[0])**0.5)
+    row_InBlock = int(len(grid[0]) ** 0.5)
     block_WeNeed = []
-    for row in range(3*row, 3*row + row_InBlock):
-        block_WeNeed.extend([grid[row][col] for col in range(col*3, col*3 + row_InBlock)])
+    for row in range(3 * row, 3 * row + row_InBlock):
+        block_WeNeed.extend([grid[row][col] for col in range(col * 3, col * 3 + row_InBlock)])
     return block_WeNeed
 
 
@@ -128,12 +126,11 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    nums_InRow = {str(i) for i in range(1,10) if str(i) not in get_row(grid, pos)}
-    nums_InCol = {str(i) for i in range(1,10) if str(i) not in get_col(grid, pos)}
-    nums_InBlock = {str(i) for i in range (1,10) if str(i) not in get_block(grid,pos)}
+    nums_InRow = {str(i) for i in range(1, 10) if str(i) not in get_row(grid, pos)}
+    nums_InCol = {str(i) for i in range(1, 10) if str(i) not in get_col(grid, pos)}
+    nums_InBlock = {str(i) for i in range(1, 10) if str(i) not in get_block(grid, pos)}
     possible_values = nums_InBlock & nums_InRow & nums_InCol
     return possible_values
-
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -157,15 +154,14 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         for num in values:
             if num not in "123456789":
                 return False
-        for num in values: 
+        for num in values:
             row, col = position
             grid[row][col] = str(num)
-            if (solve(grid)):
+            if solve(grid):
                 return grid
             else:
                 grid[row][col] = "."
     return None
-              
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
@@ -173,22 +169,25 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     # TODO: Add doctests with bad puzzles
     check = True
     for i in range(len(solution[0])):
-        if len(set(get_row(solution, (i, 0)))) == 9 and len(set(get_col(solution, (0, i)))) == 9 and "." not in set(get_row(solution, (i,0))):
-            for row in range(0,7,3):
-                for col in range(0,7,3):
-                    if len(set(get_block(solution,(row,col))))==9:
+        if (
+            len(set(get_row(solution, (i, 0)))) == 9
+            and len(set(get_col(solution, (0, i)))) == 9
+            and "." not in set(get_row(solution, (i, 0)))
+        ):
+            for row in range(0, 7, 3):
+                for col in range(0, 7, 3):
+                    if len(set(get_block(solution, (row, col)))) == 9:
                         check = True
                     else:
-                        return False     
-        else: 
+                        return False
+        else:
             return False
     return check
 
 
-
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """Генерация судоку заполненного на N элементов
-    
+
     >>> grid = generate_sudoku(40)
     >>> sum(1 for row in grid for e in row if e == '.')
     41
@@ -208,41 +207,40 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    table_withNumbers= [i%9 for i in range(1,82)]
+    table_withNumbers = [i % 9 for i in range(1, 82)]
     table = group(table_withNumbers, 9)
     counter_of_row = 0
     for row in table:
         for num in range(9):
             if counter_of_row % 3 == 0:
-                row[num] = str(int((row[num] + counter_of_row/3) % 9))
-            elif counter_of_row <3:
-                row[num] = str(int((row[num]+3*counter_of_row)%9))
-            elif counter_of_row <6:
-                row[num] = str(int(((row[num]+3*counter_of_row)+1)%9))
-            elif counter_of_row <9:
-                row[num] = str(int(((row[num]+3*counter_of_row)+2)%9))
-            if row[num] == '0':
-                row[num] = '9'
-        counter_of_row += 1 
+                row[num] = str(int((row[num] + counter_of_row / 3) % 9))
+            elif counter_of_row < 3:
+                row[num] = str(int((row[num] + 3 * counter_of_row) % 9))
+            elif counter_of_row < 6:
+                row[num] = str(int(((row[num] + 3 * counter_of_row) + 1) % 9))
+            elif counter_of_row < 9:
+                row[num] = str(int(((row[num] + 3 * counter_of_row) + 2) % 9))
+            if row[num] == "0":
+                row[num] = "9"
+        counter_of_row += 1
     import random
+
     for i in range(20):
-        i=random.randint(0,8)
-        if i%3==2:
-            table[i], table[i-1] = table[i-1], table[i]
-        elif i%3==1:
-            table[i+1], table[i-1] = table[i-1], table[i+1]
+        i = random.randint(0, 8)
+        if i % 3 == 2:
+            table[i], table[i - 1] = table[i - 1], table[i]
+        elif i % 3 == 1:
+            table[i + 1], table[i - 1] = table[i - 1], table[i + 1]
         else:
-            table[i], table[i+1] = table[i+1], table[i]
-    n=0
-    while n<(81-N):
-        row = random.randint(0,8)
-        col = random.randint(0,8)
+            table[i], table[i + 1] = table[i + 1], table[i]
+    n = 0
+    while n < (81 - N):
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
         if table[row][col] != ".":
             table[row][col] = "."
             n += 1
     return table
-               
-
 
 
 if __name__ == "__main__":
