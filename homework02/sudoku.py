@@ -109,10 +109,12 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     for row in range(0, len(grid[0])):
         for num in range(0, len(grid[0])):
             if grid[row][num] == ".":
-                position = (row, num)
-                return position
+                position = (int(row), int(num))
+                break
     if position == "":
         return None
+    else:
+        return position
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -207,21 +209,21 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    table_withNumbers = [i % 9 for i in range(1, 82)]
+    table_withNumbers = [str(i % 9) for i in range(1, 82)]
     table = group(table_withNumbers, 9)
     counter_of_row = 0
     for row in table:
         for num in range(9):
             if counter_of_row % 3 == 0:
-                row[num] = str(int((row[num] + counter_of_row / 3) % 9))
+                row[num] = str(int((int(row[num]) + counter_of_row / 3) % 9))
             elif counter_of_row < 3:
-                row[num] = str(int((row[num] + 3 * counter_of_row) % 9))
+                row[num] = str(int((int(row[num]) + 3 * counter_of_row) % 9))
             elif counter_of_row < 6:
-                row[num] = str(int(((row[num] + 3 * counter_of_row) + 1) % 9))
+                row[num] = str(int(((int(row[num]) + 3 * counter_of_row) + 1) % 9))
             elif counter_of_row < 9:
-                row[num] = str(int(((row[num] + 3 * counter_of_row) + 2) % 9))
-            if row[num] == "0":
-                row[num] = "9"
+                row[num] = str(int(((int(row[num]) + 3 * counter_of_row) + 2) % 9))
+            if int(row[num]) == 0:
+                row[num] = str(9)
         counter_of_row += 1
     import random
 
