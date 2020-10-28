@@ -109,7 +109,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     for row in range(0, len(grid[0])):
         for num in range(0, len(grid[0])):
             if grid[row][num] == ".":
-                position = (int(row), int(num))
+                position = (row, num)
                 break
     if position == "":
         return None
