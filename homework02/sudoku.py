@@ -1,4 +1,5 @@
 import pathlib
+import random
 import typing as tp
 
 T = tp.TypeVar("T")
@@ -105,16 +106,12 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    position = ""
-    for row in range(0, len(grid[0])):
-        for num in range(0, len(grid[0])):
+    for row in range(0, len(grid)):
+        for num in range(0, len(grid[row])):
             if grid[row][num] == ".":
                 position = (row, num)
-                break
-    if position == "":
-        return None
-    else:
-        return position
+                return position
+    return None
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -128,9 +125,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    nums_InRow = {str(i) for i in range(1, 10) if str(i) not in get_row(grid, pos)}
-    nums_InCol = {str(i) for i in range(1, 10) if str(i) not in get_col(grid, pos)}
-    nums_InBlock = {str(i) for i in range(1, 10) if str(i) not in get_block(grid, pos)}
+    nums_InRow = set(str(i) for i in range(1, 10) if str(i) not in get_row(grid, pos))
+    nums_InCol = set(str(i) for i in range(1, 10) if str(i) not in get_col(grid, pos))
+    nums_InBlock = set(str(i) for i in range(1, 10) if str(i) not in get_block(grid, pos))
     possible_values = nums_InBlock & nums_InRow & nums_InCol
     return possible_values
 
@@ -148,21 +145,19 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    if find_empty_positions(grid) == None:
+    position = find_empty_positions(grid)
+    if position is None:
         return grid
     else:
-        position = find_empty_positions(grid)
         values = find_possible_values(grid, position)
-        for num in values:
-            if num not in "123456789":
-                return False
-        for num in values:
-            row, col = position
-            grid[row][col] = str(num)
-            if solve(grid):
-                return grid
-            else:
-                grid[row][col] = "."
+    if len(values) == 0:
+        return None
+    for num in values:
+        grid[position[0]][position[1]] = str(num)
+        if solve(grid):
+            return grid
+        else:
+            grid[position[0]][position[1]] = "."
     return None
 
 
@@ -209,32 +204,8 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    table_withNumbers = [str(i % 9) for i in range(1, 82)]
-    table = group(table_withNumbers, 9)
-    counter_of_row = 0
-    for row in table:
-        for num in range(9):
-            if counter_of_row % 3 == 0:
-                row[num] = str(int((int(row[num]) + counter_of_row / 3) % 9))
-            elif counter_of_row < 3:
-                row[num] = str(int((int(row[num]) + 3 * counter_of_row) % 9))
-            elif counter_of_row < 6:
-                row[num] = str(int(((int(row[num]) + 3 * counter_of_row) + 1) % 9))
-            elif counter_of_row < 9:
-                row[num] = str(int(((int(row[num]) + 3 * counter_of_row) + 2) % 9))
-            if int(row[num]) == 0:
-                row[num] = str(9)
-        counter_of_row += 1
-    import random
-
-    for i in range(20):
-        i = random.randint(0, 8)
-        if i % 3 == 2:
-            table[i], table[i - 1] = table[i - 1], table[i]
-        elif i % 3 == 1:
-            table[i + 1], table[i - 1] = table[i - 1], table[i + 1]
-        else:
-            table[i], table[i + 1] = table[i + 1], table[i]
+    table = group(["." for i in range(81)], 9)
+    solve(table)
     n = 0
     while n < (81 - N):
         row = random.randint(0, 8)
