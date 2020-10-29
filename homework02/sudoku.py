@@ -43,8 +43,8 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    list_Of_Elements = [values[n * i - n : n * i] for i in range(1, len(values) // n + 1)]
-    return list_Of_Elements
+    groups = [values[n * i - n : n * i] for i in range(1, len(values) // n + 1)]
+    return groups
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -57,8 +57,8 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    row_WeNeed = grid[pos[0]]
-    return row_WeNeed
+    row_we_need = grid[pos[0]]
+    return row_we_need
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -72,8 +72,8 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     ['3', '6', '9']
     """
 
-    col_WeNeed = [grid[i][pos[1]] for i in range(len(grid[0]))]
-    return col_WeNeed
+    col_we_need = [grid[i][pos[1]] for i in range(len(grid[0]))]
+    return col_we_need
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -87,13 +87,13 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    Number_OfBlock = (pos[0] // 3, pos[1] // 3)
-    row, col = Number_OfBlock
-    row_InBlock = int(len(grid[0]) ** 0.5)
-    block_WeNeed = []
-    for row in range(3 * row, 3 * row + row_InBlock):
-        block_WeNeed.extend([grid[row][col] for col in range(col * 3, col * 3 + row_InBlock)])
-    return block_WeNeed
+    number_of_block = (pos[0] // 3, pos[1] // 3)
+    row, col = number_of_block
+    row_in_block = int(len(grid[0]) ** 0.5)
+    block_we_need = []
+    for row in range(3 * row, 3 * row + row_in_block):
+        block_we_need.extend([grid[row][col] for col in range(col * 3, col * 3 + row_in_block)])
+    return block_we_need
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
@@ -125,10 +125,10 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    nums_InRow = set(str(i) for i in range(1, 10) if str(i) not in get_row(grid, pos))
-    nums_InCol = set(str(i) for i in range(1, 10) if str(i) not in get_col(grid, pos))
-    nums_InBlock = set(str(i) for i in range(1, 10) if str(i) not in get_block(grid, pos))
-    possible_values = nums_InBlock & nums_InRow & nums_InCol
+    nums_cannot_be_in_cell = set(get_row(grid, pos)).union(
+        set(get_col(grid, pos)), set(get_block(grid, pos))
+    ) - {"."}
+    possible_values = set(str(i) for i in range(1, 10)) - nums_cannot_be_in_cell
     return possible_values
 
 
@@ -204,8 +204,10 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    table = group(["." for i in range(81)], 9)
-    solve(table)
+    table_with_dots = group(["." for i in range(81)], 9)
+    solve(table_with_dots)
+    table = table_with_dots
+    # table is table with numbers/dots instead of numbers
     n = 0
     while n < (81 - N):
         row = random.randint(0, 8)
