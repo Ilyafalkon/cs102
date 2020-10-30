@@ -87,8 +87,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    number_of_block = (pos[0] // 3, pos[1] // 3)
-    row, col = number_of_block
+    row, col = (pos[0] // 3, pos[1] // 3)
     row_in_block = int(len(grid[0]) ** 0.5)
     block_we_need = []
     for row in range(3 * row, 3 * row + row_in_block):
@@ -109,8 +108,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     for row in range(0, len(grid)):
         for num in range(0, len(grid[row])):
             if grid[row][num] == ".":
-                position = (row, num)
-                return position
+                return row, num
     return None
 
 
@@ -154,8 +152,9 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         return None
     for num in values:
         grid[position[0]][position[1]] = str(num)
-        if solve(grid):
-            return grid
+        solution = solve(grid)
+        if solution:
+            return solution
         else:
             grid[position[0]][position[1]] = "."
     return None
@@ -205,8 +204,8 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     True
     """
     table_with_dots = group(["." for i in range(81)], 9)
-    solve(table_with_dots)
-    table = table_with_dots
+    table = solve(table_with_dots)
+    table = tp.cast(tp.List[tp.List[str]], table)
     # table is table with numbers/dots instead of numbers
     n = 0
     while n < (81 - N):
