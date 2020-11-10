@@ -132,10 +132,6 @@ class GameOfLife:
                     neighbours.append(self.grid[row][col])
         return neighbours
 
-    from pprint import pprint as pp
-
-    random.seed(1)
-
     def get_next_generation(self) -> Grid:
         """
         Получить следующее поколение клеток.
