@@ -37,7 +37,6 @@ class GameOfLife:
                         grid[row][col] = 1
         return grid
 
-
     def get_neighbours(self, cell: Cell) -> Cells:
         neighbours = []
         for row in range(cell[0] - 1, cell[0] + 2):
@@ -51,7 +50,7 @@ class GameOfLife:
                 ):
                     neighbours.append(self.curr_generation[row][col])
         return neighbours
-        
+
     def get_next_generation(self) -> Grid:
         new_grid = [[0 for i in range(self.cols)] for i in range(self.rows)]
         for row in range(self.rows):
@@ -71,10 +70,11 @@ class GameOfLife:
 
     @property
     def is_max_generations_exceeded(self) -> bool:
-        if self.generations < self.max_generations:
+        if not self.max_generations:
+            return False
+        elif self.generations < self.max_generations:
             return False
         return True
-            
 
     @property
     def is_changing(self) -> bool:
@@ -89,18 +89,16 @@ class GameOfLife:
         path = pathlib.Path(filename)
         with path.open() as f:
             for line in f:
-                if '1' in line or '0' in line:
+                if "1" in line or "0" in line:
                     grid.extend([[int(c) for c in line if c in "10"]])
         life = GameOfLife((len(grid), len(grid[0])))
         life.curr_generation = grid
         return life
-        
-        
+
     def save(self, filename: pathlib.Path) -> None:
         path = pathlib.Path(filename)
-        with path.open() as f:
+        with path.open("w") as f:
             for row in self.curr_generation:
                 for col in row:
                     f.write(str(col))
-                f.write("/n")
-            
+                f.write("\n")
