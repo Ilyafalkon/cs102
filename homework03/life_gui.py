@@ -42,7 +42,7 @@ class GUI(UI):
         pause = False
         while self.life.is_changing and not self.life.is_max_generations_exceeded:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == QUIT: # type: ignore
                     pygame.quit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     pause = True
