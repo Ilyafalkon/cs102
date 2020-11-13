@@ -63,7 +63,7 @@ class GUI(UI):
             pygame.display.flip()
             while pause:
                 for event in pygame.event.get():
-                    if event.type == QUIT: #type: ignore
+                    if event.type == QUIT:  # type: ignore
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                         pause = False
@@ -91,7 +91,7 @@ if type(args.width) == str and type(args.heigth) == str and type(args.cell_size)
     ui = GUI(life, cell_size=int(args.cell_size))
     ui.run()
 
-if __name__ == '__main__':
-    life = GameOfLife((20,20))
-    ui = GUI(life, cell_size = 40)
+if __name__ == "__main__":
+    life = GameOfLife((20, 20))
+    ui = GUI(life, cell_size=40)
     ui.run()

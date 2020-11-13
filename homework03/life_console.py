@@ -57,7 +57,7 @@ if type(args.rows) == str and type(args.cols) == str and type(args.max_generatio
     life = GameOfLife((int(args.rows), int(args.cols)), max_generations=int(args.max_generations))
     ui = Console(life)
     ui.run()
-elif __name__ == '__main__':
-    life = GameOfLife((30,60))
+elif __name__ == "__main__":
+    life = GameOfLife((30, 60))
     ui = Console(life)
     ui.run()
