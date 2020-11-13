@@ -1,8 +1,20 @@
+import argparse
+import sys
+
 import pygame
 from pygame.locals import *
 
 from life import GameOfLife
 from ui import UI
+
+parser = argparse.ArgumentParser(
+    description="This is graphic version Game Of Life. Write the width, heigth and cell size of the gametable"
+)
+
+parser.add_argument("--width")
+parser.add_argument("--heigth")
+parser.add_argument("--cell_size")
+args = parser.parse_args()
 
 
 class GUI(UI):
@@ -42,7 +54,7 @@ class GUI(UI):
         pause = False
         while self.life.is_changing and not self.life.is_max_generations_exceeded:
             for event in pygame.event.get():
-                if event.type == QUIT: # type: ignore
+                if event.type == QUIT:  # type: ignore
                     pygame.quit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     pause = True
@@ -51,7 +63,7 @@ class GUI(UI):
             pygame.display.flip()
             while pause:
                 for event in pygame.event.get():
-                    if event.type == QUIT:
+                    if event.type == QUIT: #type: ignore
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                         pause = False
@@ -70,3 +82,11 @@ class GUI(UI):
             self.life.step()
             clock.tick(self.speed)
         pygame.quit()
+
+
+if type(args.width) == str and type(args.heigth) == str and type(args.cell_size) == str:
+    rows = int(int(args.heigth) / int(args.cell_size))
+    cols = int(int(args.width) / int(args.cell_size))
+    life = GameOfLife((rows, cols))
+    ui = GUI(life, cell_size=int(args.cell_size))
+    ui.run()
