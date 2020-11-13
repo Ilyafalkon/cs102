@@ -1,7 +1,18 @@
+import argparse
 import curses
+import sys
 
 from life import GameOfLife
 from ui import UI
+
+parser = argparse.ArgumentParser(
+    description="This is console version of Game Of Life. Write the number of rows, cols and max generation"
+)
+
+parser.add_argument("--rows")
+parser.add_argument("--cols")
+parser.add_argument("--max_generations")
+args = parser.parse_args()
 
 
 class Console(UI):
@@ -40,3 +51,9 @@ class Console(UI):
             self.life.step()
             screen.getch()
         curses.endwin()
+
+
+if type(args.rows) == str and type(args.cols) == str and type(args.max_generations) == str:
+    life = GameOfLife((int(args.rows), int(args.cols)), max_generations=int(args.max_generations))
+    ui = Console(life)
+    ui.run()
