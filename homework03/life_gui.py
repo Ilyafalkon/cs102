@@ -90,3 +90,8 @@ if type(args.width) == str and type(args.heigth) == str and type(args.cell_size)
     life = GameOfLife((rows, cols))
     ui = GUI(life, cell_size=int(args.cell_size))
     ui.run()
+
+if __name__ == '__main__':
+    life = GameOfLife((20,20))
+    ui = GUI(life, cell_size = 40)
+    ui.run()
