@@ -53,6 +53,7 @@ class Console(UI):
             self.draw_grid(screen)
             self.life.step()
             screen.refresh()
+
         curses.endwin()
 
 
