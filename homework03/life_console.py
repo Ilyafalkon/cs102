@@ -43,7 +43,7 @@ class Console(UI):
 
     def run(self) -> None:
         screen = curses.initscr()
-        screen.nodelay(1)
+        screen.nodelay(True)
         while (
             self.life.is_changing
             and not self.life.is_max_generations_exceeded
