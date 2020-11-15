@@ -52,10 +52,11 @@ class GUI(UI):
         pygame.display.set_caption("Game of Life")
         self.screen.fill(pygame.Color("white"))
         pause = False
-        while self.life.is_changing and not self.life.is_max_generations_exceeded:
+        running = True
+        while self.life.is_changing and not self.life.is_max_generations_exceeded and running:
             for event in pygame.event.get():
                 if event.type == QUIT:  # type: ignore
-                    pygame.quit()
+                    running = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     pause = True
             self.draw_grid()
@@ -64,7 +65,8 @@ class GUI(UI):
             while pause:
                 for event in pygame.event.get():
                     if event.type == QUIT:  # type: ignore
-                        pygame.quit()
+                        running = False
+                        pause = False
                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                         pause = False
                     elif event.type == pygame.MOUSEBUTTONUP:
