@@ -47,7 +47,7 @@ class GameOfLife:
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == QUIT:  # type: ignore
                     running = False
             self.draw_lines()
             # Отрисовка списка клеток
@@ -131,10 +131,6 @@ class GameOfLife:
                 ):
                     neighbours.append(self.grid[row][col])
         return neighbours
-
-    from pprint import pprint as pp
-
-    random.seed(1)
 
     def get_next_generation(self) -> Grid:
         """
