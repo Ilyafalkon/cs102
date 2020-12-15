@@ -4,8 +4,7 @@ import typing as tp
 import zlib
 
 from pyvcs.index import read_index, update_index
-from pyvcs.objects import (commit_parse, find_object, find_tree_files,
-                           read_object, read_tree)
+from pyvcs.objects import commit_parse, find_object, find_tree_files, read_object, read_tree
 from pyvcs.refs import get_ref, is_detached, resolve_head, update_ref
 from pyvcs.tree import commit_tree, write_tree
 
@@ -36,5 +35,5 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
             dir_name = entry[0][: entry[0].index("/")]
             os.mkdir(dir_name)
         _, data = read_object(entry[1], gitdir)
-        with (pathlib.Path(entry[0])).open('w') as f: #type: ignore
-            f.write(data.decode()) #type: ignore 
+        with (pathlib.Path(entry[0])).open("w") as f:  # type: ignore
+            f.write(data.decode())  # type: ignore

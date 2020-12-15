@@ -4,9 +4,10 @@ import os
 import pathlib
 import struct
 import typing as tp
-
-from pyvcs.objects import hash_object 
 from typing import List
+
+from pyvcs.objects import hash_object
+
 
 class GitIndexEntry(tp.NamedTuple):
     # @see: https://github.com/git/git/blob/master/Documentation/technical/index-format.txt
