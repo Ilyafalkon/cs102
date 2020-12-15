@@ -30,10 +30,10 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
     with (gitdir / "objects" / obj_name[:2] / obj_name[2:]).open("rb") as f:
         data = f.read()
     tree_sha = commit_parse(data).decode()
-    for entry in find_tree_files(tree_sha, gitdir):
-        if "/" in entry[0]:
-            dir_name = entry[0][: entry[0].index("/")]
+    for file in find_tree_files(tree_sha, gitdir):
+        if "/" in file[0]:
+            dir_name = file[0][: file[0].index("/")]
             os.mkdir(dir_name)
-        _, data = read_object(entry[1], gitdir)
-        with (pathlib.Path(entry[0])).open("w") as f:  # type: ignore
+        _, data = read_object(file[1], gitdir)
+        with (pathlib.Path(file[0])).open("w") as f:  # type: ignore
             f.write(data.decode())  # type: ignore
