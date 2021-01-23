@@ -6,8 +6,8 @@ from string import Template
 import pandas as pd  # type: ignore
 from pandas import json_normalize
 
-from vkapi import config, session  # type: ignore
-from vkapi.exceptions import APIError  # type: ignore
+from vkapi import config, session
+from vkapi.exceptions import APIError
 
 
 def get_posts_2500(
