@@ -5,6 +5,7 @@ import community as community_louvain  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import networkx as nx  # type: ignore
 import pandas as pd  # type: ignore
+
 from vkapi.friends import get_friends, get_mutual  # type: ignore
 
 
@@ -18,12 +19,12 @@ def ego_network(
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
     network = []
-    if friends is None:
-        friends = get_friends(user_id=user_id).items
+    if friends is None and user_id is not None:
+        friends = get_friends(user_id=user_id).items  # type: ignore
     mutual_friends = get_mutual(source_uid=user_id, target_uids=friends)
     for friend in mutual_friends:
-        for common_friend in friend["common_friends"]:
-            network.append((friend["id"], common_friend))
+        for common_friend in friend["common_friends"]:  # type: ignore
+            network.append((friend["id"], common_friend))  # type: ignore
     return network
 
 

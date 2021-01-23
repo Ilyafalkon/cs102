@@ -3,6 +3,7 @@ import statistics
 import typing as tp
 
 from dateutil.relativedelta import relativedelta
+
 from vkapi.friends import get_friends  # type: ignore
 
 
@@ -19,7 +20,7 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     friends = get_friends(user_id=user_id, fields=["bdate"]).items
     for friend in friends:
         try:
-            friend_bdate = dt.datetime.strptime(friend["bdate"], "%d.%m.%Y")
+            friend_bdate = dt.datetime.strptime(friend["bdate"], "%d.%m.%Y")  # type: ignore
             if friend_bdate is not None:
                 delta = relativedelta(dt.datetime.now(), friend_bdate)
                 age = delta.years
