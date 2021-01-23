@@ -3,12 +3,11 @@ import time
 import typing as tp
 from string import Template
 
-import pandas as pd
+import pandas as pd  # type: ignore
 from pandas import json_normalize
 
-from vkapi import session
-from vkapi.config import VK_CONFIG
-from vkapi.exceptions import APIError
+from vkapi import config, session  # type: ignore
+from vkapi.exceptions import APIError  # type: ignore
 
 
 def get_posts_2500(
@@ -48,7 +47,7 @@ def get_posts_2500(
         }}
         return result;
     """
-    data = {"code": code, "access_token": VK_CONFIG["access_token"], "v": VK_CONFIG}
+    data = {"code": code, "access_token": config.VK_CONFIG["access_token"], "v": config.VK_CONFIG}
     response = session.post("execute", data=data)
     if response.ok:
         json = response.json()["response"]
