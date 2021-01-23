@@ -9,6 +9,7 @@ from pandas import json_normalize
 from vkapi import config, session  # type: ignore
 from vkapi.exceptions import APIError  # type: ignore
 
+
 def get_posts_2500(
     owner_id: str = "",
     domain: str = "",
