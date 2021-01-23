@@ -57,7 +57,6 @@ def solve(grid: list, curr_pos: typing.Tuple[int, int]):
     solved = False
     row2, col2 = find_destination(grid)
     row, col = curr_pos
-    print(curr_pos)
     if (
         grid[row2 - 1][col2] == "1"
         or grid[row2 + 1][col2] == "1"
