@@ -2,9 +2,8 @@ import re
 import time
 import unittest
 
-import responses
-
-from vkapi.friends import FriendsResponse, get_friends, get_mutual
+import responses  # type: ignore
+from vkapi.friends import FriendsResponse, get_friends, get_mutual  # type: ignore
 
 
 class FriendsTestCase(unittest.TestCase):

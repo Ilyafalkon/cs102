@@ -1,12 +1,12 @@
 import typing as tp
 from collections import defaultdict
 
-import community as community_louvain
-import matplotlib.pyplot as plt
-import networkx as nx
-import pandas as pd
+import community as community_louvain  # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
+import networkx as nx  # type: ignore
+import pandas as pd  # type: ignore
 
-from vkapi.friends import get_friends, get_mutual
+from vkapi.friends import get_friends, get_mutual  # type: ignore
 
 
 def ego_network(
@@ -18,7 +18,14 @@ def ego_network(
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    pass
+    network = []
+    if friends is None and user_id is not None:
+        friends = get_friends(user_id=user_id).items  # type: ignore
+    mutual_friends = get_mutual(source_uid=user_id, target_uids=friends)
+    for friend in mutual_friends:
+        for common_friend in friend["common_friends"]:  # type: ignore
+            network.append((friend["id"], common_friend))  # type: ignore
+    return network
 
 
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
