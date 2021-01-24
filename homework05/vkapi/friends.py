@@ -37,7 +37,10 @@ def get_friends(
         "v": config.VK_CONFIG["version"],
     }
     response = session.get("friends.get", params=parameters)
-    json = response.json()["response"]
+    if response.ok:
+        json = response.json()["response"]
+    else:
+        raise Exception("HTTPError")
     return FriendsResponse(count=json["count"], items=json["items"])
 
 
@@ -78,7 +81,11 @@ def get_mutual(
             "v": config.VK_CONFIG["version"],
         }
         response = session.get("friends.getMutual", params=parameters)
-        json = response.json()["response"]
+        if response.ok:
+            json = response.json()["response"]
+        else:
+            raise Exception("HTTPError")
+
         return json
 
     data = []
@@ -98,7 +105,10 @@ def get_mutual(
             "v": config.VK_CONFIG["version"],
         }
         response = session.get("friends.getMutual", params=parameters)
-        json = response.json()["response"]
+        if response.ok:
+            json = response.json()["response"]
+        else:
+            raise Exception("HTTPError")
         for info in json:
             data.append(
                 MutualFriends(

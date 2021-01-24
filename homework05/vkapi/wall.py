@@ -51,6 +51,8 @@ def get_posts_2500(
     response = session.post("execute", data=data)
     if response.ok:
         json = response.json()["response"]
+    else:
+        raise Exception("HTTPError")
     return json["items"]
 
 

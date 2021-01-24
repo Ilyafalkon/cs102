@@ -36,8 +36,8 @@ class Session(requests.Session):
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type: ignore
         url = f"{self.base_url}/{url}"
-        return super().get(url, *args, **kwargs)
+        return super().get(url, timeout=self.timeout, *args, **kwargs)
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type: ignore
         url = f"{self.base_url}/{url}"
-        return super().post(url, *args, **kwargs)
+        return super().post(url, timeout=self.timeout, *args, **kwargs)
