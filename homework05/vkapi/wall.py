@@ -50,9 +50,13 @@ def get_posts_2500(
     data = {"code": code, "access_token": config.VK_CONFIG["access_token"], "v": config.VK_CONFIG}
     response = session.post("execute", data=data)
     if response.ok:
-        json = response.json()["response"]
+        json = response.json()
     else:
-        raise Exception("HTTPError")
+        raise APIError("HTTPError")
+    if "error" in json:
+        raise APIError(json["error"]["error_msg"])
+    else:
+        json = json["response"]
     return json["items"]
 
 

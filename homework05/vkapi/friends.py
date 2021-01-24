@@ -38,9 +38,13 @@ def get_friends(
     }
     response = session.get("friends.get", params=parameters)
     if response.ok:
-        json = response.json()["response"]
+        json = response.json()
     else:
-        raise Exception("HTTPError")
+        raise APIError("HTTPError")
+    if "error" in json:
+        raise APIError(json["error"]["error_msg"])
+    else:
+        json = json["response"]
     return FriendsResponse(count=json["count"], items=json["items"])
 
 
@@ -82,10 +86,13 @@ def get_mutual(
         }
         response = session.get("friends.getMutual", params=parameters)
         if response.ok:
-            json = response.json()["response"]
+            json = response.json()
         else:
-            raise Exception("HTTPError")
-
+            raise APIError("HTTPError")
+        if "error" in json:
+            raise APIError(json["error"]["error_msg"])
+        else:
+            json = json["response"]
         return json
 
     data = []
@@ -106,9 +113,13 @@ def get_mutual(
         }
         response = session.get("friends.getMutual", params=parameters)
         if response.ok:
-            json = response.json()["response"]
+            json = response.json()
         else:
-            raise Exception("HTTPError")
+            raise APIError("HTTPError")
+        if "error" in json:
+            raise APIError(json["error"]["error_msg"])
+        else:
+            json = json["response"]
         for info in json:
             data.append(
                 MutualFriends(
