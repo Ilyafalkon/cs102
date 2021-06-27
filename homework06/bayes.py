@@ -14,7 +14,7 @@ class NaiveBayesClassifier:
         self.count_words: tp.Dict[str, str]
 
     def fit(self, X, y):
-        """ Fit Naive Bayes classifier according to X, y. """
+        """Fit Naive Bayes classifier according to X, y."""
         y_list = y
         self.classes = list(set(y))
         self.classes_p = {}
@@ -43,7 +43,7 @@ class NaiveBayesClassifier:
             self.count_words[key] = sum(self.counters[key].values())
 
     def predict(self, X):
-        """ Perform classification on an array of test vectors X. """
+        """Perform classification on an array of test vectors X."""
         predicts = []
         for msg in X:
             words = msg.split(" ")
@@ -77,7 +77,7 @@ class NaiveBayesClassifier:
         return predicts
 
     def score(self, X_test, y_test):
-        """ Returns the mean accuracy on the given test data and labels. """
+        """Returns the mean accuracy on the given test data and labels."""
         v_len = len(X_test)
         predicts = self.predict(X_test)
         same_results = 0
