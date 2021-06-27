@@ -1,21 +1,23 @@
 import collections
 import math
+import typing as tp
 
 
 class NaiveBayesClassifier:
-    def __init__(self, alpha):
+    def __init__(self, alpha: float = 0.05):
         self.alpha = alpha
-        self.classes = list()
-        self.classes_p = dict()
-        self.X_set = set()
+        self.classes: tp.List[str]
+        self.classes_p: tp.Dict[str, float]
+        self.X_set: tp.Set[str]
         self.d = int()
-        self.counters = dict()
-        self.count_words = dict()
+        self.counters: tp.Dict[str, float]
+        self.count_words: tp.Dict[str, str]
 
     def fit(self, X, y):
         """ Fit Naive Bayes classifier according to X, y. """
         y_list = y
         self.classes = list(set(y))
+        self.classes_p = {}
         for class_ in self.classes:
             self.classes_p[class_] = y_list.count(class_) / len(y_list)
 
@@ -32,7 +34,8 @@ class NaiveBayesClassifier:
             sort_massages[y[i]] += msg
         for key in self.classes:
             sort_massages[key] = sort_massages[key].split(" ")
-
+        self.counters = {}
+        self.count_words = {}
         for key in self.classes:
             self.counters[key] = collections.Counter()
             for word in sort_massages[key]:
