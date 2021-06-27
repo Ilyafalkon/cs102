@@ -1,5 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
+
 from scraputils import extract_news, get_news
 
 
