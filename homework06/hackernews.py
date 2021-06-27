@@ -1,3 +1,5 @@
+import string
+
 from bottle import redirect, request, route, run, template
 
 from bayes import NaiveBayesClassifier
@@ -92,6 +94,11 @@ def classify_news():
     return template(
         "classification_template", good_rows=rows_good, maybe_rows=rows_maybe, never_rows=rows_never
     )
+
+
+def clean(s: str):
+    translator = str.maketrans("", "", string.punctuation)
+    return s.translate(translator)
 
 
 if __name__ == "__main__":
