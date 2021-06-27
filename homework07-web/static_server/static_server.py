@@ -4,28 +4,7 @@ import mimetypes
 import pathlib
 from urllib.parse import unquote, urlsplit
 
-from httpserver import (BaseHTTPRequestHandler, HTTPRequest, HTTPResponse,
-                        HTTPServer)
-
-
-@dataclasses.dataclass
-class URL:
-    fragment: str
-    path: str
-    query: str
-    scheme: str
-    auth: str
-
-
-def deconstruct_url(url: str):
-    """Tranform the url into URL structure.
-    Params:
-        url : string : the URL
-    Returns:
-        URL
-    """
-    scheme, auth, path, query, fragment = urlsplit(url.strip())
-    return URL(fragment=fragment, path=path, query=query, scheme=scheme, auth=auth)
+from httpserver import BaseHTTPRequestHandler, HTTPRequest, HTTPResponse, HTTPServer
 
 
 def url_normalize(url: str) -> str:
@@ -108,7 +87,7 @@ class StaticServer(HTTPServer):
 if __name__ == "__main__":
     document_root = pathlib.Path("static") / "root"
     server = StaticServer(
-        timeout=60,
+        timeout=5,
         document_root=document_root,
         request_handler_cls=StaticHTTPRequestHandler,
     )
