@@ -2,7 +2,7 @@ import socket
 import textwrap
 import unittest
 
-import requests
+import requests # type: ignore
 
 
 class TestStaticHTTPServer(unittest.TestCase):
